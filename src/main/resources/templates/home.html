@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>notes</title>
 </head>
 <body>
-<h2>Hello boy</h2>
+
+<tr th:object="${defaultUser}">
+    <td th:text="${defaultUser.getFirstName()}"> 1</td>
+    <td th:text="${defaultUser.lastName}"> 2</td>
+    <td th:text="${defaultUser.username}"> 3</td>
+</tr>
 
 
 </body>

@@ -15,6 +15,11 @@ public class NotesController {
     @Autowired
     UserService service;
 
+    @GetMapping
+    public String method(){
+        return "Hello world";
+    }
+
     @PostMapping
     public String createUser(@RequestBody User user){
         service.createUser(user);
