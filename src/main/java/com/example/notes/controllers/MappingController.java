@@ -45,10 +45,21 @@ public class MappingController {
     }
 
     @GetMapping("/{username}")
-    public String getAllNotes(@PathVariable String username, Model model){
-        List<Note> notes= service.getAllNotes(username);
-        model.addAttribute("notes",notes);
+    public String UserInfo(@PathVariable String username,Model model) {
+        model.addAttribute("username",username);
+        return "user_info";
+    }
+
+    @GetMapping("/{username}/all_note")
+    public String getAllNotes(@PathVariable String username, Model model) {
+        List<Note> notes = service.getAllNotes(username);
+        model.addAttribute("notes", notes);
         return "all_notes";
+    }
+
+    @GetMapping("/{username}/add_note")
+    public String addNotes(@PathVariable String username) {
+        return "add_note";
     }
 
 }
