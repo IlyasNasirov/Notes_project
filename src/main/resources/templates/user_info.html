@@ -8,11 +8,12 @@
 <body>
 
 <div th:object="${username}">
-    <span th:text="username">username</span></br>
+    <p>show info <span th:text="${username}">username</span></br></p>
+
 </div>
 <div>
-    <button>show notes</button>
-    <button>create note</button>
+    <input type="button" value="show notes" th:attr="onclick=|getAllNotes("${username}")|">
+
 </div>
 
 
