@@ -6,6 +6,13 @@
     <title>Title</title>
 </head>
 <body>
-<h2>add note page</h2>
+
+<div>
+    <form th:method="POST" th:object="${note}">
+        <input type="text" th:field="*{title}">
+        <input type="text" th:field="*{text}">
+        <input type="submit" value="add">
+    </form>
+</div>
 </body>
 </html>

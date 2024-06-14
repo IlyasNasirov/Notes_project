@@ -32,21 +32,21 @@ public class MappingController {
         return "home";
     }
 
-    @GetMapping("/new_user")
-    public String newUser(Model model) {
-        model.addAttribute("newUser", new User());
-        return "createUser";
-    }
-
     @PostMapping
     public String createUser(@ModelAttribute User user) {
         service.createUser(user);
         return "user";
     }
 
+    @GetMapping("/new_user")
+    public String newUser(Model model) {
+        model.addAttribute("newUser", new User());
+        return "createUser";
+    }
+
     @GetMapping("/{username}")
-    public String UserInfo(@PathVariable String username,Model model) {
-        model.addAttribute("username",username);
+    public String UserInfo(@PathVariable String username, Model model) {
+        model.addAttribute("username", username);
         return "user_info";
     }
 
@@ -58,8 +58,14 @@ public class MappingController {
     }
 
     @GetMapping("/{username}/add_note")
-    public String addNotes(@PathVariable String username) {
+    public String addNotes(@PathVariable String username,Model model) {
+        model.addAttribute("note",new Note());
         return "add_note";
+    }
+    @PostMapping("/{username}/add_note")
+    public String saveNote(@PathVariable String username, @ModelAttribute Note note){
+        service.addNotes(username,note);
+        return "redirect:/notes/{username}/all_note";
     }
 
 }
