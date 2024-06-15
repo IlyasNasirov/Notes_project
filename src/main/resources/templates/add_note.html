@@ -9,11 +9,26 @@
 
 <div>
     <form th:method="POST" th:object="${note}">
+
         <input type="text" th:field="*{title}">
         <input type="text" th:field="*{text}">
         <input type="submit" value="add">
+
     </form>
 </div>
+
+<form:hidden path="id"/>
+
+Name<form:input path="name"/>
+<br><br>
+Surname<form:input path="surname"/>
+<br><br>
+Department<form:input path="department"/>
+<br><br>
+Salary<form:input path="salary"/>
+<br><br>
+<input type="submit" value="Create">
+
 <button th:onclick="|location.href='@{/notes/{username}(username=${username})}'|" >back</button>
 </body>
 </html>

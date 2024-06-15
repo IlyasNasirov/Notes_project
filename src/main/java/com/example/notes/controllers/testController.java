@@ -20,13 +20,29 @@ public class testController {
     }
 
     @PostMapping
-    public String createUser(@RequestBody User user){
-       return service.createUser(user);
+    public String createUser(@RequestBody User user) {
+        return service.createUser(user);
     }
+
     @PostMapping("/{username}")
     public void addNote(@PathVariable String username,
-                        @RequestBody Note note){
-        service.addNotes(username,note);
+                        @RequestBody Note note) {
+        service.addNotes(username, note);
+    }
+
+    @DeleteMapping("/{username}")
+    public List<Note> deleteNote(@PathVariable String username,
+                                 @RequestParam int id) {
+        service.deleteNote(username, id);
+        return service.getAllNotes(username);
+    }
+
+    @PutMapping("/{username}")
+    public String updateNote(@PathVariable String username,
+                             @RequestBody Note note,
+                             @RequestParam int id) {
+        service.updateNote(note, id, username);
+        return "note was updated";
     }
 
 //    @PostMapping

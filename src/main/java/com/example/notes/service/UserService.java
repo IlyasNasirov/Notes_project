@@ -29,6 +29,12 @@ public class UserService {
     public void createUser(User user) {
         userRepo.save(user);
     }
+    public Note getNoteById(int id){
+        Optional<Note> optional=noteRepo.findById(id);
+        if(optional.isEmpty())
+            throw new RuntimeException();
+        return optional.get();
+    }
 
     public void addNotes(String username, Note notes) {
         Optional<User> optional = userRepo.findByUsername(username);

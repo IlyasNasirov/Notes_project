@@ -15,10 +15,10 @@ public class NotesController {
     @Autowired
     UserService service;
 
-    @GetMapping
-    public String method(){
-        return "Hello world";
-    }
+//    @GetMapping
+//    public String method(){
+//        return "Hello world";
+//    }
 
     @PostMapping
     public String createUser(@RequestBody User user){
@@ -29,6 +29,11 @@ public class NotesController {
     public List<Note> allNotes(@PathVariable String username){
         return service.getAllNotes(username);
     }
+    @GetMapping
+    public Note getNoteById(@RequestParam int id){
+       return service.getNoteById(id);
+    }
+
     @PostMapping("/{username}")
     public void addNotes(@PathVariable String username,
                          @RequestBody Note notes){
