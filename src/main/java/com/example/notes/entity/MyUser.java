@@ -1,7 +1,6 @@
 package com.example.notes.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "Users")
-public class User {
+public class MyUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,6 +16,7 @@ public class User {
     private String lastName;
     @Column(unique = true)
     private String username;
+    private String password;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Note> notes;
 

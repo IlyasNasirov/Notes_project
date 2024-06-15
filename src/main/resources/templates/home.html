@@ -13,6 +13,10 @@
     <td th:text="${defaultUser.username}"> 3</td>
 </tr>
 
+<button th:onclick="|location.href='@{/notes/new_user}'|" >sign in</button>
+<button th:onclick="|location.href='@{/notes/{username}(username=${username})}'|" >log in</button>
+
+
 
 </body>
 </html>

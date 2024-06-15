@@ -1,12 +1,12 @@
 package com.example.notes.repository;
 
-import com.example.notes.entity.User;
+import com.example.notes.entity.MyUser;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface UserRepository extends CrudRepository<User,Integer> {
+public interface UserRepository extends CrudRepository<MyUser,Integer> {
 
-    Optional<User> findByUsername(String username);
+    Optional<MyUser> findByUsername(String username);
 
 }

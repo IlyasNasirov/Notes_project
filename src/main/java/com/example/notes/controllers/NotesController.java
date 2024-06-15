@@ -1,7 +1,7 @@
 package com.example.notes.controllers;
 
 import com.example.notes.entity.Note;
-import com.example.notes.entity.User;
+import com.example.notes.entity.MyUser;
 import com.example.notes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +20,8 @@ public class NotesController {
 //        return "Hello world";
 //    }
 
-    @PostMapping
-    public String createUser(@RequestBody User user){
+    @PostMapping("/new_user")
+    public String createUser(@RequestBody MyUser user){
         service.createUser(user);
         return "user was created";
     }

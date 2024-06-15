@@ -1,7 +1,7 @@
 package com.example.notes.controllers;
 
 import com.example.notes.entity.Note;
-import com.example.notes.entity.User;
+import com.example.notes.entity.MyUser;
 import com.example.notes.service.MappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +18,8 @@ public class MappingController {
     MappingService service;
 
     @ModelAttribute("defaultUser")
-    public User defaultUser() {
-        User user = new User();
+    public MyUser defaultUser() {
+        MyUser user = new MyUser();
         user.setFirstName("White");
         user.setLastName("Walter");
         user.setUsername("heisenberg");
@@ -33,14 +33,14 @@ public class MappingController {
     }
 
     @PostMapping
-    public String saveUser(@ModelAttribute User user) {
+    public String saveUser(@ModelAttribute MyUser user) {
         service.createUser(user);
-        return "user";
+        return "user_info";
     }
 
     @GetMapping("/new_user")
     public String createUser(Model model) {
-        model.addAttribute("newUser", new User());
+        model.addAttribute("newUser", new MyUser());
         return "createUser";
     }
 

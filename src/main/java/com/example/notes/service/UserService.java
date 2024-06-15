@@ -1,13 +1,12 @@
 package com.example.notes.service;
 
 import com.example.notes.entity.Note;
-import com.example.notes.entity.User;
+import com.example.notes.entity.MyUser;
 import com.example.notes.repository.NoteRepository;
 import com.example.notes.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,15 +17,15 @@ public class UserService {
     NoteRepository noteRepo;
 
     public List<Note> getAllNotes(String username) {
-        Optional<User> optional = userRepo.findByUsername(username);
+        Optional<MyUser> optional = userRepo.findByUsername(username);
         if (optional.isEmpty())
             throw new RuntimeException();
-        User user = optional.get();
+        MyUser user = optional.get();
         List<Note> notes = noteRepo.findAllByUser(user);
         return notes;
     }
 
-    public void createUser(User user) {
+    public void createUser(MyUser user) {
         userRepo.save(user);
     }
     public Note getNoteById(int id){
@@ -37,7 +36,7 @@ public class UserService {
     }
 
     public void addNotes(String username, Note note) {
-        Optional<User> optional = userRepo.findByUsername(username);
+        Optional<MyUser> optional = userRepo.findByUsername(username);
         if (optional.isEmpty())
             throw new RuntimeException();
         note.setUser(optional.get());
