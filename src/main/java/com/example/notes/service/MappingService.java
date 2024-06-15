@@ -23,8 +23,8 @@ public class MappingService {
         return rest.getForObject("http://localhost:8080/api/v1/notes/{username}", List.class, username);
     }
 
-    public Note getNoteById(String username,int id){
-        return rest.getForObject("http://localhost:8080/api/v1/notes/{username}?id={id}",Note.class,username,id);
+    public Note getNoteById(int id){
+        return rest.getForObject("http://localhost:8080/api/v1/notes?id={id}",Note.class,id);
     }
 
     public String addNotes(String username, Note note) {

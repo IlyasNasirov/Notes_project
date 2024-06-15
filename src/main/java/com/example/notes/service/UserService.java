@@ -36,12 +36,12 @@ public class UserService {
         return optional.get();
     }
 
-    public void addNotes(String username, Note notes) {
+    public void addNotes(String username, Note note) {
         Optional<User> optional = userRepo.findByUsername(username);
         if (optional.isEmpty())
             throw new RuntimeException();
-        notes.setUser(optional.get());
-        noteRepo.save(notes);
+        note.setUser(optional.get());
+        noteRepo.save(note);
     }
 
     public void deleteNoteById(int id) {

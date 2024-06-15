@@ -65,21 +65,28 @@ public class MappingController {
     }
 
     @GetMapping("{username}/update_note")
-    public String updateNote(@PathVariable String username,
-                             @RequestParam("id") int id,
+    public String updateNote(@RequestParam("id") int id,
                              Model model) {
-        Note note=service.getNoteById(username,id);
-        model.addAttribute("note",note);
-        return "add_note";
+        Note note = service.getNoteById(id);
+        model.addAttribute("note", note);
+        return "update_note";
     }
 
-    @GetMapping("/{username}/add_note")
+    @PostMapping("{username}/update_note")
+    public String updatedNote(@PathVariable String username,
+                              @RequestParam int id,
+                              @ModelAttribute Note note) {
+        service.updateNote(note, id, username);
+        return "redirect:/notes/{username}/all_note";
+    }
+
+    @GetMapping("/{username}/note")
     public String createNote(@PathVariable String username, Model model) {
         model.addAttribute("note", new Note());
         return "add_note";
     }
 
-    @PostMapping("/{username}/add_note")
+    @PostMapping("/{username}/note")
     public String saveNote(@PathVariable String username, @ModelAttribute Note note) {
         service.addNotes(username, note);
         return "redirect:/notes/{username}/all_note";
