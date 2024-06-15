@@ -9,8 +9,9 @@
 <div th:each="note : ${notes}">
     <span th:text="${note.title}">title</span></br>
     <span th:text="${note.text}">text</span></br>
-</div>
 
+</div>
+<button th:onclick="|location.href='@{/notes/{username}(username=${username})}'|" >back</button>
 
 
 </body>
