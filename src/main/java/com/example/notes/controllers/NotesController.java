@@ -4,6 +4,7 @@ import com.example.notes.entity.Note;
 import com.example.notes.entity.MyUser;
 import com.example.notes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class NotesController {
         service.createUser(user);
         return "user was created";
     }
+//    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{username}")
     public List<Note> allNotes(@PathVariable String username){
         return service.getAllNotes(username);

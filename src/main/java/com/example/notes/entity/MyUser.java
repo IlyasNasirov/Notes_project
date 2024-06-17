@@ -17,6 +17,7 @@ public class MyUser {
     @Column(unique = true)
     private String username;
     private String password;
+    private String roles;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Note> notes;
 

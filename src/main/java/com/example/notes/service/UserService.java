@@ -5,8 +5,11 @@ import com.example.notes.entity.MyUser;
 import com.example.notes.repository.NoteRepository;
 import com.example.notes.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.Role;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +18,7 @@ import java.util.Optional;
 public class UserService {
     UserRepository userRepo;
     NoteRepository noteRepo;
+    private PasswordEncoder encoder;
 
     public List<Note> getAllNotes(String username) {
         Optional<MyUser> optional = userRepo.findByUsername(username);
@@ -26,6 +30,8 @@ public class UserService {
     }
 
     public void createUser(MyUser user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setRoles("ROLE_USER");
         userRepo.save(user);
     }
     public Note getNoteById(int id){
