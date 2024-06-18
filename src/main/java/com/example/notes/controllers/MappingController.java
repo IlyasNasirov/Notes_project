@@ -4,6 +4,7 @@ import com.example.notes.entity.Note;
 import com.example.notes.entity.MyUser;
 import com.example.notes.service.MappingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,7 @@ public class MappingController {
         return "home";
     }
 
+
     @PostMapping
     public String saveUser(@ModelAttribute MyUser user) {
         service.createUser(user);
@@ -43,7 +45,7 @@ public class MappingController {
         model.addAttribute("newUser", new MyUser());
         return "createUser";
     }
-
+//    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/{username}")
     public String UserMenu(@PathVariable String username, Model model) {
         model.addAttribute("username", username);

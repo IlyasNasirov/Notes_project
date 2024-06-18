@@ -29,8 +29,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/notes/new_user","/notes").permitAll()
-                        .requestMatchers("notes/**").authenticated()
+                        .requestMatchers(
+                                "/notes/new_user",
+                                "/notes",
+                                "/api/v1/notes/new_user",
+                                "api/v1/notes/admin").permitAll()
+                        .requestMatchers(
+                                "/api/v1/notes/**",
+                                "/notes/**").authenticated()
                 )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .build();

@@ -26,28 +26,30 @@ public class NotesController {
         service.createUser(user);
         return "user was created";
     }
-//    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/{username}")
     public List<Note> allNotes(@PathVariable String username){
         return service.getAllNotes(username);
     }
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping
     public Note getNoteById(@RequestParam int id){
        return service.getNoteById(id);
     }
-
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping("/{username}")
     public void addNotes(@PathVariable String username,
                          @RequestBody Note notes){
         service.addNotes(username,notes);
     }
-
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PutMapping("/{username}")
     public String updateNote(@RequestBody Note note,
                              @RequestParam int id){
         service.updateNote(id,note);
         return "note was updated";
     }
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @DeleteMapping("/{username}")
     public String deleteNote(@RequestParam int id){
         service.deleteNoteById(id);
