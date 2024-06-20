@@ -19,10 +19,12 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        return user.getRoles();
+
 //        return Collections.singleton(new SimpleGrantedAuthority("USER"));
-       return Arrays.stream(user.getRoles().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+//       return Arrays.stream(user.getRoles().split(","))
+//                .map(SimpleGrantedAuthority::new)
+//                .collect(Collectors.toList());
     }
 
     @Override
