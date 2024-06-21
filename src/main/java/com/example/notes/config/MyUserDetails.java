@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
+import static org.apache.catalina.realm.UserDatabaseRealm.getRoles;
+
 public class MyUserDetails implements UserDetails {
         private final MyUser user;
 
@@ -19,12 +21,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles();
-
-//        return Collections.singleton(new SimpleGrantedAuthority("USER"));
-//       return Arrays.stream(user.getRoles().split(","))
-//                .map(SimpleGrantedAuthority::new)
-//                .collect(Collectors.toList());
+        return Collections.singleton(new SimpleGrantedAuthority(user.getRoles()));
     }
 
     @Override

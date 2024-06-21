@@ -7,17 +7,17 @@
 </head>
 <body>
 
-<tr th:object="${defaultUser}">
-    <td th:text="${defaultUser.getFirstName()}"> 1</td>
-    <td th:text="${defaultUser.lastName}"> 2</td>
-    <td th:text="${defaultUser.username}"> 3</td>
-</tr>
+<!--<tr th:object="${defaultUser}">-->
+<!--    <td th:text="${defaultUser.getFirstName()}"> 1</td>-->
+<!--    <td th:text="${defaultUser.lastName}"> 2</td>-->
+<!--    <td th:text="${defaultUser.username}"> 3</td>-->
+<!--</tr>-->
 
-<button th:onclick="|location.href='@{/notes/new_user}'|" >sign in</button>
-<button th:onclick="|location.href='@{/notes/{username}(username=${username})}'|" >log in</button>
+<!--<button th:onclick="|location.href='@{/notes/new_user}'|" >sign in</button>-->
+<!--<button th:onclick="|location.href=login|" >log in</button>-->
 
-<h2>hi</h2>
-
+<h4><a href="/login">Войти</a></h4>
+<h4><a href="/registration">Зарегистрироваться</a></h4>
 
 </body>
 </html>

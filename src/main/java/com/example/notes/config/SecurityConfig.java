@@ -32,13 +32,15 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/notes/new_user",
                                 "/notes",
-                                "/api/v1/notes/new_user",
-                                "api/v1/notes/admin").permitAll()
+                                "/api/v1/notes/new_user").permitAll()
                         .requestMatchers(
                                 "/api/v1/notes/**",
                                 "/notes/**").authenticated()
                 )
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                .and().formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/notes")
+                .permitAll()
                 .build();
     }
 
