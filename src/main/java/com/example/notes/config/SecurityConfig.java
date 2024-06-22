@@ -35,13 +35,13 @@ public class SecurityConfig {
                                 "/api/v1/notes/new_user").permitAll()
                         .requestMatchers(
                                 "/api/v1/notes/**",
-                                "/notes/**").hasRole("USER")
+                                "/notes/**").authenticated()
                 )
-                .formLogin(form->form.loginPage("/login").defaultSuccessUrl("/notes").permitAll())
+                .formLogin(form->form.loginPage("/login")
+                        .successForwardUrl("/notes/{username}").permitAll())
                 .logout(form->form.logoutUrl("/logout").logoutSuccessUrl("/notes").permitAll())
                 .build();
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder(){

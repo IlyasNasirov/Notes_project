@@ -4,6 +4,7 @@ import com.example.notes.entity.Note;
 import com.example.notes.entity.MyUser;
 import com.example.notes.service.MappingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,11 +34,13 @@ public class MappingController {
         return "registration";
     }
 
+
     @GetMapping("/{username}")
     public String UserMenu(@PathVariable String username, Model model) {
         model.addAttribute("username", username);
         return "user_info";
     }
+
 
     @GetMapping("/{username}/all_note")
     public String getAllNotes(@PathVariable String username, Model model) {
