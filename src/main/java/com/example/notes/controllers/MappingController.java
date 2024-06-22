@@ -13,25 +13,13 @@ import java.util.List;
 @Controller
 @RequestMapping("/notes")
 public class MappingController {
-
     @Autowired
     MappingService service;
 
-    @ModelAttribute("defaultUser")
-    public MyUser defaultUser() {
-        MyUser user = new MyUser();
-        user.setFirstName("White");
-        user.setLastName("Walter");
-        user.setUsername("heisenberg");
-        return user;
-    }
-
     @GetMapping
-    public String MainPage(Model model) {
-        model.addAttribute("defaultUser", defaultUser());
+    public String MainPage() {
         return "home";
     }
-
 
     @PostMapping
     public String saveUser(@ModelAttribute MyUser user) {
@@ -44,7 +32,7 @@ public class MappingController {
         model.addAttribute("newUser", new MyUser());
         return "registration";
     }
-//    @PreAuthorize("hasAuthority('ROLE_USER')")
+
     @GetMapping("/{username}")
     public String UserMenu(@PathVariable String username, Model model) {
         model.addAttribute("username", username);
