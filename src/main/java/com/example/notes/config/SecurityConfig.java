@@ -37,8 +37,8 @@ public class SecurityConfig {
                                 "/api/v1/notes/**",
                                 "/notes/**").authenticated()
                 )
-                .formLogin(form->form.loginPage("/login")
-                        .successForwardUrl("/notes/{username}").permitAll())
+                .formLogin(form->form.loginPage("/login").usernameParameter("username")
+                        .defaultSuccessUrl("/notes/").permitAll())
                 .logout(form->form.logoutUrl("/logout").logoutSuccessUrl("/notes").permitAll())
                 .build();
     }
