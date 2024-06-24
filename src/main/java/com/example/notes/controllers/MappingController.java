@@ -37,6 +37,7 @@ public class MappingController {
 
     @GetMapping("/{username}")
     public String UserMenu(@PathVariable String username, Model model) {
+
         model.addAttribute("username", username);
         return "user_info";
     }
