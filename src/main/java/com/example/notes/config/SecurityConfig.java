@@ -41,13 +41,13 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/notes/new_user",
                                 "/notes",
-                                "/api/v1/notes/new_user").permitAll()
+                                "/api/v1/notes/new_user","/login").permitAll()
                         .requestMatchers(
                                 "/api/v1/notes/**",
                                 "/notes/**").authenticated()
                 )
-                .formLogin(form->form.loginPage("/login")
-                        .defaultSuccessUrl("/notes/").permitAll())
+//                .formLogin(form->form.loginPage("/login")
+//                        .defaultSuccessUrl("/notes/").permitAll())
                 .logout(form->form.logoutUrl("/logout").logoutSuccessUrl("/notes").permitAll())
                 .build();
     }

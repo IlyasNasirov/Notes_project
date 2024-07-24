@@ -35,6 +35,7 @@ public class MappingController {
     }
 
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{username}")
     public String UserMenu(@PathVariable String username, Model model) {
 
