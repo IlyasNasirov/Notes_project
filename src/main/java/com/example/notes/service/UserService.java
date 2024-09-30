@@ -1,67 +1,22 @@
 package com.example.notes.service;
 
-import com.example.notes.entity.Note;
-import com.example.notes.entity.MyUser;
-import com.example.notes.repository.NoteRepository;
-import com.example.notes.repository.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import com.example.notes.dto.MyUserDto;
+import com.example.notes.dto.NoteDto;
 
-import javax.management.relation.Role;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
-@Service
-@AllArgsConstructor
-public class UserService {
-    UserRepository userRepo;
-    NoteRepository noteRepo;
-    private PasswordEncoder encoder;
+public interface UserService {
 
-    public List<Note> getAllNotes(String username) {
-        Optional<MyUser> optional = userRepo.findByUsername(username);
-        if (optional.isEmpty())
-            throw new RuntimeException();
-        MyUser user = optional.get();
-        List<Note> notes = noteRepo.findAllByUser(user);
-        return notes;
-    }
+    List<NoteDto> getAllNotes(String username);
 
-    public void createUser(MyUser user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setRoles("ROLE_USER");
-        userRepo.save(user);
-    }
-    public Note getNoteById(int id){
-        Optional<Note> optional=noteRepo.findById(id);
-        if(optional.isEmpty())
-            throw new RuntimeException();
-        return optional.get();
-    }
+    MyUserDto createUser(MyUserDto userDto);
 
-    public void addNotes(String username, Note note) {
-        Optional<MyUser> optional = userRepo.findByUsername(username);
-        if (optional.isEmpty())
-            throw new RuntimeException();
-        note.setUser(optional.get());
-        noteRepo.save(note);
-    }
+    NoteDto getNoteById(String username, int noteId);
 
-    public void deleteNoteById(int id) {
-        noteRepo.deleteById(id);
-    }
+    void addNote(String username, NoteDto noteDto);
 
-    public Note updateNote(int id,Note newNote){
-        Optional<Note> optional=noteRepo.findById(id);
-        if(optional.isEmpty())
-            throw new RuntimeException();
-        Note note =optional.get();
-        note.setText(newNote.getText());
-        note.setTitle(newNote.getTitle());
-        noteRepo.save(note);
-        return note;
-    }
+    void deleteNoteById(String username, int noteId);
+
+    NoteDto updateNote(String username, int noteId, NoteDto noteDto);
 
 }

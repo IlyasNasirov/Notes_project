@@ -2,7 +2,7 @@ package com.example.notes.controllers;
 
 import com.example.notes.entity.Note;
 import com.example.notes.entity.MyUser;
-import com.example.notes.service.MappingService;
+import com.example.notes.service.ClientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -13,9 +13,9 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/notes")
-public class MappingController {
+public class ClientController {
     @Autowired
-    MappingService service;
+    ClientServiceImpl service;
 
     @GetMapping
     public String MainPage() {

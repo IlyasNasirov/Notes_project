@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "Users")
 public class MyUser {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
