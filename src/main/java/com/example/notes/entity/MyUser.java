@@ -12,13 +12,19 @@ public class MyUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String firstName;
+
     private String lastName;
+
     @Column(unique = true)
     private String username;
+
     private String password;
+
     private String roles;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Note> notes;
 
 }
