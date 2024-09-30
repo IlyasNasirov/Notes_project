@@ -16,33 +16,32 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/{username}")
-    public ResponseEntity<List<NoteDto>> allNotes(@PathVariable String username) {
+    @GetMapping("/{username}/notes")
+    public ResponseEntity<List<NoteDto>> getAllNotes(@PathVariable String username) {
         return ResponseEntity.ok(userService.getAllNotes(username));
     }
 
-    @GetMapping("/{username}")
-    public ResponseEntity<NoteDto> getNoteById(@PathVariable String username,
-                                               @RequestParam int noteId) {
+    @GetMapping("/{username}/notes/{noteId}")
+    public ResponseEntity<NoteDto> getNote(@PathVariable String username,
+                                           @PathVariable int noteId) {
         return ResponseEntity.ok(userService.getNoteById(username, noteId));
     }
 
-    @PostMapping("/{username}")
+    @PostMapping("/{username}/notes")
     public ResponseEntity<Void> addNotes(@PathVariable String username,
                                          @Validated @RequestBody NoteDto noteDto) {
         userService.addNote(username, noteDto);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{username}")
+    @PutMapping("/{username}/notes/{noteId}")
     public ResponseEntity<NoteDto> updateNote(@PathVariable String username,
-                                              @RequestParam int noteId,
+                                              @PathVariable int noteId,
                                               @Validated @RequestBody NoteDto noteDto) {
         return ResponseEntity.ok(userService.updateNote(username, noteId, noteDto));
-
     }
 
-    @DeleteMapping("/{username}")
+    @DeleteMapping("/{username}/notes")
     public ResponseEntity<Void> deleteNote(@PathVariable String username,
                                            @RequestParam int noteId) {
         userService.deleteNoteById(username, noteId);

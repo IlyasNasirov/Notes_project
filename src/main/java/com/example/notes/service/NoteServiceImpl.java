@@ -3,9 +3,9 @@ package com.example.notes.service;
 import com.example.notes.dto.NoteDto;
 import com.example.notes.entity.MyUser;
 import com.example.notes.entity.Note;
+import com.example.notes.exception.EntityNotFoundException;
 import com.example.notes.mapper.NoteMapper;
 import com.example.notes.repository.NoteRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +26,32 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public NoteDto getNoteById(int noteId) {
-        Note note = noteRepository.findById(noteId)
-                .orElseThrow(() -> new EntityNotFoundException("Note not found with id: " + noteId));
+        Note note = checkNote(noteId);
         return noteMapper.toDto(note);
+    }
+
+    @Override
+    public NoteDto updateNote(int noteId, NoteDto noteDto) {
+        Note note = checkNote(noteId);
+
+        if (noteDto.getTitle() != null) {
+            note.setTitle(noteDto.getTitle());
+        }
+        if (noteDto.getText() != null) {
+            note.setText(noteDto.getText());
+        }
+        noteRepository.save(note);
+        return noteMapper.toDto(note);
+    }
+
+    @Override
+    public void deleteNote(int noteId) {
+        checkNote(noteId);
+        noteRepository.deleteById(noteId);
+    }
+
+    Note checkNote(int noteId) {
+        return noteRepository.findById(noteId)
+                .orElseThrow(() -> new EntityNotFoundException("Note not found with id: " + noteId));
     }
 }

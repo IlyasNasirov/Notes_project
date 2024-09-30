@@ -1,5 +1,6 @@
 package com.example.notes.service;
 
+import com.example.notes.dto.LoginDto;
 import com.example.notes.dto.MyUserDto;
 import com.example.notes.dto.NoteDto;
 import com.example.notes.entity.Note;
@@ -11,7 +12,6 @@ import com.example.notes.mapper.MyUserMapper;
 import com.example.notes.mapper.NoteMapper;
 import com.example.notes.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public MyUserDto createUser(MyUserDto userDto) {
+    public MyUserDto registerUser(MyUserDto userDto) {
         MyUser user = userMapper.toEntity(userDto);
         if (userRepository.existsByUsername(userDto.getUsername())) {
             throw new DuplicateEntityException("Username already exists");
@@ -49,50 +49,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public MyUserDto login(LoginDto loginDto) {
+        MyUser user = checkUser(loginDto.getUsername());
+        if (!encoder.matches(loginDto.getPassword(), user.getPassword())) {
+            throw new AuthenticationException("Invalid credentials");
+        }
+        return userMapper.toDto(user);
+    }
+
+    @Override
     public NoteDto getNoteById(String username, int noteId) {
         MyUser user = checkUser(username);
         Note note=user.getNotes().stream()
                 .filter(e -> e.getId() == noteId).findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Note not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Note not found with id: " + noteId));
         return noteMapper.toDto(note);
     }
 
     @Override
     public void addNote(String username, NoteDto noteDto) {
         MyUser user = checkUser(username);
-        user.getNotes().add(noteMapper.toEntity(noteDto));
+        Note note=noteMapper.toEntity(noteDto);
+        note.setUser(user);
+        user.getNotes().add(note);
+
         userRepository.save(user);
     }
 
     @Override
     public void deleteNoteById(String username, int id) {
-        MyUser user = checkUser(username);
-        user.getNotes().removeIf(note -> note.getId() == id);
-        userRepository.save(user);
+        checkUser(username);
+        noteService.deleteNote(id);
     }
 
     @Override
     public NoteDto updateNote(String username, int noteId, NoteDto noteDto) {
-        MyUser user = checkUser(username);
-        Note note = noteMapper.toEntity(noteService.getNoteById(noteId));
-
-        if (user.getNotes().stream().noneMatch(e -> e.equals(note))) {
-            throw new EntityNotFoundException("Note not found");
-        }
-
-        if (noteDto.getTitle() != null) {
-            note.setTitle(noteDto.getTitle());
-        }
-        if (noteDto.getText() != null) {
-            note.setText(noteDto.getText());
-        }
-        userRepository.save(user);  //check
-        return noteMapper.toDto(note);
+        checkUser(username);
+        return noteService.updateNote(noteId, noteDto);
     }
 
     MyUser checkUser(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+                .orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
     }
 
 }

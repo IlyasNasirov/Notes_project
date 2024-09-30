@@ -2,10 +2,12 @@ package com.example.notes.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
-@Table(name = "Notes")
+@Table(name = "notes")
+@EqualsAndHashCode
 public class Note {
 
     @Id
