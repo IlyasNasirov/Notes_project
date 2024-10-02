@@ -16,6 +16,7 @@ public class UserController {
 
     private final UserService userService;
 
+
     @GetMapping("/{username}/notes")
     public ResponseEntity<List<NoteDto>> getAllNotes(@PathVariable String username) {
         return ResponseEntity.ok(userService.getAllNotes(username));
